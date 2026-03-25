@@ -1,28 +1,40 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import { landingThemeTokens, type LandingTheme } from './landingTheme';
 
 interface StatItemProps {
   value: string;
   label: string;
+  theme: LandingTheme;
 }
 
-const StatItem: React.FC<StatItemProps> = ({ value, label }) => (
-  <View style={styles.statItem}>
-    <Text style={styles.statValue}>{value}</Text>
-    <Text style={styles.statLabel}>{label}</Text>
-  </View>
-);
+interface StatsSectionProps {
+  theme: LandingTheme;
+}
 
-const StatsSection: React.FC = () => {
+const StatItem: React.FC<StatItemProps> = ({ value, label, theme }) => {
+  const colors = landingThemeTokens[theme];
+
+  return (
+    <View style={styles.statItem}>
+      <Text style={[styles.statValue, { color: colors.textPrimary }]}>{value}</Text>
+      <Text style={[styles.statLabel, { color: colors.textMuted }]}>{label}</Text>
+    </View>
+  );
+};
+
+const StatsSection: React.FC<StatsSectionProps> = ({ theme }) => {
+  const colors = landingThemeTokens[theme];
+
   return (
     <View style={styles.container}>
-      <Text style={styles.transitionText}>
+      <Text style={[styles.transitionText, { color: colors.textSecondary }]}>
         {'很高兴遇见你！因为你的加入，我们更加温暖和有趣——'}
       </Text>
       <View style={styles.statsRow}>
-        <StatItem value="381032" label="Users" />
-        <StatItem value="5289" label="CloudApps" />
-        <StatItem value="2319" label="Authentic Apps" />
+        <StatItem value="381032" label="Users" theme={theme} />
+        <StatItem value="5289" label="CloudApps" theme={theme} />
+        <StatItem value="2319" label="Authentic Apps" theme={theme} />
       </View>
     </View>
   );
@@ -35,11 +47,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   transitionText: {
-    fontFamily: 'PingFang SC',
+    fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
     fontSize: 24,
     fontWeight: '500',
-    color: '#494A64',
-    opacity: 0.8,
     textAlign: 'center',
     marginBottom: 40,
   },
@@ -54,16 +64,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statValue: {
-    fontFamily: 'PingFang SC',
+    fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
     fontSize: 60,
     fontWeight: '400',
-    color: '#494A64',
   },
   statLabel: {
-    fontFamily: 'PingFang SC',
+    fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
     fontSize: 16,
     fontWeight: '400',
-    color: '#494A64',
     marginTop: 8,
   },
 });

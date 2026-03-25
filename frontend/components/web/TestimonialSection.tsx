@@ -1,15 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
+import { landingThemeTokens, type LandingTheme } from './landingTheme';
 
-const TestimonialSection: React.FC = () => {
+interface TestimonialSectionProps {
+  theme: LandingTheme;
+}
+
+const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
+  const colors = landingThemeTokens[theme];
+  const isDark = theme === 'dark';
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDark ? 'rgba(7, 10, 25, 0.92)' : '#FFFFFF',
+        },
+      ]}
+    >
       <View style={styles.inner}>
-        {/* Decorative opening quote mark */}
-        <Text style={styles.quoteMarkOpen}>{'\u201C'}</Text>
+        <Text style={[styles.quoteMarkOpen, { color: colors.accentSoft }]}>{'“'}</Text>
 
-        {/* Testimonial quote */}
-        <Text style={styles.quoteText}>
+        <Text style={[styles.quoteText, { color: colors.textSecondary }]}>
           Before Calyra, I never realized how disconnected I was from my own
           emotions. Days would blur together, and I couldn't clearly explain why
           I felt stressed or unmotivated. Calyra helped me slow down and reflect
@@ -19,17 +32,17 @@ const TestimonialSection: React.FC = () => {
           something I genuinely want to return to every day.
         </Text>
 
-        {/* Decorative closing quote mark */}
-        <Text style={styles.quoteMarkClose}>{'\u201D'}</Text>
+        <Text style={[styles.quoteMarkClose, { color: colors.accentSoft }]}>{'”'}</Text>
 
-        {/* Divider */}
-        <View style={styles.divider} />
+        <View
+          style={[
+            styles.divider,
+            { backgroundColor: isDark ? 'rgba(194, 184, 255, 0.4)' : '#A496FF' },
+          ]}
+        />
 
-        {/* Attribution */}
-        <Text style={styles.attribution}>
-          {'\u672C\u671F\u5C0F\u7F16\uFF1AAlice'}
-        </Text>
-        <Text style={styles.role}>
+        <Text style={[styles.attribution, { color: colors.textPrimary }]}>本期小编：Alice</Text>
+        <Text style={[styles.role, { color: colors.textMuted }]}>
           Project Manager at Brightwave Solutions
         </Text>
       </View>
@@ -43,7 +56,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 80,
     paddingHorizontal: 24,
-    backgroundColor: '#FFFFFF',
   },
   inner: {
     maxWidth: 760,
@@ -54,10 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 72,
     lineHeight: 72,
     fontFamily:
-      Platform.OS === 'web'
-        ? "Georgia, 'Times New Roman', serif"
-        : undefined,
-    color: '#A496FF',
+      Platform.OS === 'web' ? "Georgia, 'Times New Roman', serif" : undefined,
     opacity: 0.5,
     marginBottom: 8,
   },
@@ -69,7 +78,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 18 * 1.8,
-    color: '#494A64',
     textAlign: 'center',
     paddingHorizontal: 16,
   },
@@ -77,28 +85,22 @@ const styles = StyleSheet.create({
     fontSize: 72,
     lineHeight: 72,
     fontFamily:
-      Platform.OS === 'web'
-        ? "Georgia, 'Times New Roman', serif"
-        : undefined,
-    color: '#A496FF',
+      Platform.OS === 'web' ? "Georgia, 'Times New Roman', serif" : undefined,
     opacity: 0.5,
     marginTop: 8,
   },
   divider: {
     width: 48,
     height: 2,
-    backgroundColor: '#A496FF',
     opacity: 0.4,
     borderRadius: 1,
     marginTop: 24,
     marginBottom: 24,
   },
   attribution: {
-    fontFamily:
-      Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
+    fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
     fontSize: 16,
     fontWeight: '600',
-    color: '#494A64',
     textAlign: 'center',
     marginBottom: 6,
   },
@@ -109,8 +111,6 @@ const styles = StyleSheet.create({
         : undefined,
     fontSize: 14,
     fontWeight: '400',
-    color: '#494A64',
-    opacity: 0.6,
     textAlign: 'center',
   },
 });
