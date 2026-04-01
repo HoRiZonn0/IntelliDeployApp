@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
   },
   transitionText: {
     fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 16,
   },
   statsRow: {
     flexDirection: 'row',
@@ -62,17 +62,19 @@ const styles = StyleSheet.create({
   },
   statItem: {
     alignItems: 'center',
+    minWidth: 160,
+    paddingHorizontal: 24,
   },
   statValue: {
     fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
-    fontSize: 60,
+    fontSize: 36,
     fontWeight: '400',
   },
   statLabel: {
     fontFamily: Platform.OS === 'web' ? "'PingFang SC', sans-serif" : undefined,
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: '400',
-    marginTop: 8,
+    marginTop: 4,
   },
 });
 
