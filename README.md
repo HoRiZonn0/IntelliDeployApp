@@ -44,13 +44,13 @@ python -m pip install -r requirements.txt
 
 ### 5. 启动后端服务
 ```bash
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --host 127.0.0.1 --port 9000
 ```
 
 ### 6. 验证后端是否启动成功
 浏览器访问：
 ```text
-http://127.0.0.1:8000
+http://127.0.0.1:9000
 ```
 
 如果启动成功，会返回：
@@ -103,7 +103,7 @@ npm run ios
 
 当前配置为：
 ```ts
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://localhost:9000';
 ```
 
 说明：
@@ -140,13 +140,13 @@ python -m pip install -r requirements.txt
 
 ### 2. 前端请求不到后端
 请检查：
-- 后端是否已运行在 `127.0.0.1:8000`
+- 后端是否已运行在 `127.0.0.1:9000`
 - `frontend/services/api.ts` 中的 `API_BASE_URL` 是否正确
 
 ### 3. 手机无法访问本地后端
 如果使用真机调试：
 - 不要使用 `localhost`
-- 改为电脑局域网 IP，例如：`http://192.168.x.x:8000`
+- 改为电脑局域网 IP，例如：`http://192.168.x.x:9000`
 
 ## 六、推荐启动顺序
 先启动后端：
@@ -155,7 +155,7 @@ cd backend
 python -m venv .venv
 .venv/Scripts/activate
 python -m pip install -r requirements.txt
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --host 127.0.0.1 --port 9000
 ```
 
 再启动前端：
