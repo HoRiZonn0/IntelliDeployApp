@@ -1,4 +1,4 @@
-# IntelliDeployApp
+# IntelliDeploy
 
 ## 项目简介
 本项目由两个部分组成：

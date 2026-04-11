@@ -22,6 +22,16 @@ const TESTIMONIALS = [
 
 const GRADIENT_TEXT = 'linear-gradient(90deg, #338CFF 0%, #DAA0F2 47.12%, #FF9540 100%)';
 
+const supportsGradientTextOnWeb = () => {
+  if (Platform.OS !== 'web') return false;
+  if (typeof CSS === 'undefined' || typeof CSS.supports !== 'function') return false;
+
+  return (
+    CSS.supports('(-webkit-background-clip: text)') ||
+    CSS.supports('(background-clip: text)')
+  );
+};
+
 const ArrowLeft = () => (
   <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M23.7618 14.0811H4.40039" stroke="#353849" strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
@@ -44,6 +54,12 @@ const NavButton: React.FC<{ onPress: () => void; children: React.ReactNode }> = 
 
 const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
   const colors = landingThemeTokens[theme];
+  const isDark = theme === 'dark';
+  const supportsGradientText = supportsGradientTextOnWeb();
+  const quoteGradient = isDark
+    ? 'linear-gradient(90deg, #8CB3FF 0%, #C9BEFF 45%, #FFBD85 100%)'
+    : GRADIENT_TEXT;
+  const fallbackHighlightColor = isDark ? '#C9BEFF' : '#7C62FF';
   const [index, setIndex] = useState(0);
   const current = TESTIMONIALS[index % TESTIMONIALS.length];
 
@@ -64,19 +80,57 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: isDark ? 'rgba(8, 12, 28, 0.98)' : colors.surface },
+      ]}
+    >
       {/* Background glow */}
-      <div style={webStyles.glowBg} />
-      <div style={webStyles.glowSpot} />
+      <div
+        style={{
+          ...webStyles.glowBg,
+          background: isDark
+            ? 'linear-gradient(90deg, #080C1C 0%, #0C122B 38%, #101833 75%, #0A1022 100%)'
+            : 'linear-gradient(90deg, #F3F2FF 0%, #F9F8FF 40%, #FFFBFE 75%, #FFFFFF 100%)',
+        }}
+      />
+      <div
+        style={{
+          ...webStyles.glowSpot,
+          background: isDark
+            ? 'radial-gradient(ellipse, rgba(140, 118, 255, 0.26) 0%, rgba(113, 146, 255, 0.14) 35%, transparent 72%)'
+            : 'radial-gradient(ellipse, rgba(255, 200, 240, 0.3) 0%, transparent 70%)',
+        }}
+      />
 
       <div style={webStyles.inner}>
         {/* Header */}
         <div style={webStyles.header}>
-          <div style={webStyles.badge}>Contacts</div>
-          <div style={webStyles.title}>
+          <div
+            style={{
+              ...webStyles.badge,
+              border: isDark
+                ? '1.4px solid rgba(156, 139, 255, 0.42)'
+                : '1.4px solid rgba(124, 98, 255, 0.3)',
+              background: isDark ? 'rgba(156, 139, 255, 0.16)' : 'rgba(124, 98, 255, 0.08)',
+              boxShadow: isDark
+                ? '0 8px 24px 0 rgba(4, 8, 22, 0.35)'
+                : '0 2.8px 4.2px 0 rgba(183,183,183,0.25)',
+              color: isDark ? '#C9BEFF' : '#7C62FF',
+            }}
+          >
+            Contacts
+          </div>
+          <div style={{ ...webStyles.title, color: isDark ? '#F5F7FF' : '#1F0B4C' }}>
             第15届"金咪奖"出炉：<br />《寻爪》动物爱好者的天堂
           </div>
-          <div style={webStyles.subtitle}>
+          <div
+            style={{
+              ...webStyles.subtitle,
+              color: isDark ? 'rgba(227, 232, 255, 0.82)' : '#353849',
+            }}
+          >
             每季度最瞩目的奖项出炉——来看看有什么好的项目被发掘到吧。<br />
             登上"金咪奖"，即可获得丰厚的创作者激励！
           </div>
@@ -86,10 +140,27 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
         <div style={webStyles.testimonialRow}>
           <NavButton onPress={prev}><ArrowLeft /></NavButton>
 
-          <div style={webStyles.quoteText}>
+          <div
+            style={{
+              ...webStyles.quoteText,
+              color: isDark ? 'rgba(240, 244, 255, 0.9)' : '#272835',
+            }}
+          >
             {current.quote.map((seg, i) =>
               seg.bold ? (
-                <span key={i} style={webStyles.quoteHighlight}>{seg.text}</span>
+                <span
+                  key={i}
+                  style={{
+                    ...webStyles.quoteHighlight,
+                    color: supportsGradientText ? 'transparent' : fallbackHighlightColor,
+                    background: supportsGradientText ? quoteGradient : 'none',
+                    WebkitTextFillColor: supportsGradientText ? 'transparent' : 'currentColor',
+                    WebkitBackgroundClip: supportsGradientText ? 'text' : 'initial',
+                    backgroundClip: supportsGradientText ? 'text' : 'initial',
+                  }}
+                >
+                  {seg.text}
+                </span>
               ) : (
                 <span key={i}>{seg.text}</span>
               )
@@ -107,6 +178,14 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
                 key={i}
                 style={{
                   ...webStyles.starDot,
+                  background:
+                    op === 1
+                      ? (isDark
+                          ? 'linear-gradient(135deg, #D6CEFF, #8D79FF)'
+                          : 'linear-gradient(135deg, #C2B8FF, #7C62FF)')
+                      : (isDark
+                          ? 'linear-gradient(135deg, #5B618A, #3A4167)'
+                          : 'linear-gradient(135deg, #C2B8FF, #7C62FF)'),
                   opacity: op,
                   width: op === 1 ? 40 : 24,
                   height: op === 1 ? 40 : 24,
@@ -116,8 +195,26 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
             ))}
           </div>
           <div style={webStyles.authorInfo}>
-            <div style={webStyles.authorName}>{current.author}</div>
-            <div style={webStyles.authorRole}>{current.role}</div>
+            <div
+              style={{
+                ...webStyles.authorName,
+                color: supportsGradientText ? 'transparent' : fallbackHighlightColor,
+                background: supportsGradientText ? quoteGradient : 'none',
+                WebkitTextFillColor: supportsGradientText ? 'transparent' : 'currentColor',
+                WebkitBackgroundClip: supportsGradientText ? 'text' : 'initial',
+                backgroundClip: supportsGradientText ? 'text' : 'initial',
+              }}
+            >
+              {current.author}
+            </div>
+            <div
+              style={{
+                ...webStyles.authorRole,
+                color: isDark ? 'rgba(202, 210, 245, 0.72)' : '#666D80',
+              }}
+            >
+              {current.role}
+            </div>
           </div>
         </div>
       </div>
@@ -213,10 +310,7 @@ const webStyles: Record<string, React.CSSProperties> = {
     fontFamily: "'Ibarra Real Nova', Georgia, serif",
     fontWeight: 600,
     fontStyle: 'italic',
-    background: GRADIENT_TEXT,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
+    color: '#7C62FF',
   } as React.CSSProperties,
   footer: {
     display: 'flex',
@@ -247,10 +341,7 @@ const webStyles: Record<string, React.CSSProperties> = {
     fontSize: 'clamp(16px, 1.6vw, 24px)',
     lineHeight: 1.2,
     letterSpacing: '-0.8px',
-    background: GRADIENT_TEXT,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
+    color: '#7C62FF',
   } as React.CSSProperties,
   authorRole: {
     color: '#666D80',
