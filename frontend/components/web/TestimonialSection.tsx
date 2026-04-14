@@ -20,35 +20,65 @@ const TESTIMONIALS = [
   },
 ];
 
-const GRADIENT_TEXT = 'linear-gradient(90deg, #338CFF 0%, #DAA0F2 47.12%, #FF9540 100%)';
+const GRADIENT_TEXT = 'linear-gradient(90deg, #6D8EFF 0%, #A393FF 50%, #FFC58A 100%)';
 
 const supportsGradientTextOnWeb = () => {
   if (Platform.OS !== 'web') return false;
   if (typeof CSS === 'undefined' || typeof CSS.supports !== 'function') return false;
 
-  return (
-    CSS.supports('(-webkit-background-clip: text)') ||
-    CSS.supports('(background-clip: text)')
-  );
+  const supportsGradient = CSS.supports('background-image', 'linear-gradient(90deg, #000, #fff)');
+  const supportsClip =
+    CSS.supports('-webkit-background-clip', 'text') ||
+    CSS.supports('background-clip', 'text');
+  const supportsTextFill =
+    CSS.supports('-webkit-text-fill-color', 'transparent') ||
+    CSS.supports('color', 'transparent');
+
+  return supportsGradient && supportsClip && supportsTextFill;
 };
 
-const ArrowLeft = () => (
+const getGradientTextStyle = (
+  enableGradient: boolean,
+  gradient: string,
+  fallbackColor: string
+): React.CSSProperties =>
+  enableGradient
+    ? {
+        display: 'inline-block',
+        color: 'transparent',
+        backgroundImage: gradient,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100% 100%',
+        WebkitTextFillColor: 'transparent',
+        WebkitBackgroundClip: 'text',
+        backgroundClip: 'text',
+      }
+    : {
+        color: fallbackColor,
+      };
+
+const ArrowLeft = ({ stroke }: { stroke: string }) => (
   <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M23.7618 14.0811H4.40039" stroke="#353849" strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12.321 6.16064L4.40039 14.0812L12.321 22.0018" stroke="#353849" strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M23.7618 14.0811H4.40039" stroke={stroke} strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12.321 6.16064L4.40039 14.0812L12.321 22.0018" stroke={stroke} strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
-const ArrowRight = () => (
+const ArrowRight = ({ stroke }: { stroke: string }) => (
   <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4.40039 14.0811H23.7618" stroke="#494A64" strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M15.8408 6.16064L23.7614 14.0812L15.8408 22.0018" stroke="#494A64" strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M4.40039 14.0811H23.7618" stroke={stroke} strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15.8408 6.16064L23.7614 14.0812L15.8408 22.0018" stroke={stroke} strokeWidth="2.8162" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
-const NavButton: React.FC<{ onPress: () => void; children: React.ReactNode }> = ({ onPress, children }) => (
-  <Pressable onPress={onPress} style={styles.navOuter}>
-    <View style={styles.navInner}>{children}</View>
+const NavButton: React.FC<{
+  onPress: () => void;
+  children: React.ReactNode;
+  outerStyle: any;
+  innerStyle: any;
+}> = ({ onPress, children, outerStyle, innerStyle }) => (
+  <Pressable onPress={onPress} style={[styles.navOuter, outerStyle]}>
+    <View style={[styles.navInner, innerStyle]}>{children}</View>
   </Pressable>
 );
 
@@ -57,11 +87,24 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
   const isDark = theme === 'dark';
   const supportsGradientText = supportsGradientTextOnWeb();
   const quoteGradient = isDark
-    ? 'linear-gradient(90deg, #8CB3FF 0%, #C9BEFF 45%, #FFBD85 100%)'
+    ? 'linear-gradient(90deg, #A6B7FF 0%, #C6B8FF 48%, #FFD0A1 100%)'
     : GRADIENT_TEXT;
-  const fallbackHighlightColor = isDark ? '#C9BEFF' : '#7C62FF';
+  const fallbackHighlightColor = isDark ? '#D7CFFF' : colors.accent;
+  const highlightStyle = getGradientTextStyle(
+    supportsGradientText,
+    quoteGradient,
+    fallbackHighlightColor
+  );
   const [index, setIndex] = useState(0);
   const current = TESTIMONIALS[index % TESTIMONIALS.length];
+  const navOuterStyle = {
+    borderColor: isDark ? 'rgba(214, 220, 255, 0.12)' : 'rgba(124, 98, 255, 0.18)',
+    backgroundColor: isDark ? 'rgba(24, 30, 58, 0.88)' : 'rgba(124, 98, 255, 0.14)',
+  };
+  const navInnerStyle = {
+    backgroundColor: isDark ? 'rgba(11, 16, 34, 0.94)' : 'rgba(255, 255, 255, 0.92)',
+  };
+  const navStroke = isDark ? '#E7EBFF' : '#4A4472';
 
   const prev = () => setIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
   const next = () => setIndex((i) => (i + 1) % TESTIMONIALS.length);
@@ -83,7 +126,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
     <View
       style={[
         styles.container,
-        { backgroundColor: isDark ? 'rgba(8, 12, 28, 0.98)' : colors.surface },
+        { backgroundColor: isDark ? 'rgba(10, 14, 30, 0.98)' : colors.surface },
       ]}
     >
       {/* Background glow */}
@@ -91,16 +134,16 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
         style={{
           ...webStyles.glowBg,
           background: isDark
-            ? 'linear-gradient(90deg, #080C1C 0%, #0C122B 38%, #101833 75%, #0A1022 100%)'
-            : 'linear-gradient(90deg, #F3F2FF 0%, #F9F8FF 40%, #FFFBFE 75%, #FFFFFF 100%)',
+            ? 'linear-gradient(90deg, #091122 0%, #0E1730 38%, #111D3A 75%, #0A1227 100%)'
+            : 'linear-gradient(90deg, #EEF2FF 0%, #F5F3FF 38%, #FBF7FF 72%, #FFFFFF 100%)',
         }}
       />
       <div
         style={{
           ...webStyles.glowSpot,
           background: isDark
-            ? 'radial-gradient(ellipse, rgba(140, 118, 255, 0.26) 0%, rgba(113, 146, 255, 0.14) 35%, transparent 72%)'
-            : 'radial-gradient(ellipse, rgba(255, 200, 240, 0.3) 0%, transparent 70%)',
+            ? 'radial-gradient(ellipse, rgba(140, 118, 255, 0.22) 0%, rgba(113, 146, 255, 0.12) 38%, transparent 72%)'
+            : 'radial-gradient(ellipse, rgba(164, 150, 255, 0.18) 0%, rgba(175, 201, 246, 0.1) 36%, transparent 72%)',
         }}
       />
 
@@ -138,7 +181,9 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
 
         {/* Testimonial row */}
         <div style={webStyles.testimonialRow}>
-          <NavButton onPress={prev}><ArrowLeft /></NavButton>
+          <NavButton onPress={prev} outerStyle={navOuterStyle} innerStyle={navInnerStyle}>
+            <ArrowLeft stroke={navStroke} />
+          </NavButton>
 
           <div
             style={{
@@ -152,11 +197,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
                   key={i}
                   style={{
                     ...webStyles.quoteHighlight,
-                    color: supportsGradientText ? 'transparent' : fallbackHighlightColor,
-                    background: supportsGradientText ? quoteGradient : 'none',
-                    WebkitTextFillColor: supportsGradientText ? 'transparent' : 'currentColor',
-                    WebkitBackgroundClip: supportsGradientText ? 'text' : 'initial',
-                    backgroundClip: supportsGradientText ? 'text' : 'initial',
+                    ...highlightStyle,
                   }}
                 >
                   {seg.text}
@@ -167,7 +208,9 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
             )}
           </div>
 
-          <NavButton onPress={next}><ArrowRight /></NavButton>
+          <NavButton onPress={next} outerStyle={navOuterStyle} innerStyle={navInnerStyle}>
+            <ArrowRight stroke={navStroke} />
+          </NavButton>
         </div>
 
         {/* Footer */}
@@ -198,11 +241,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({ theme }) => {
             <div
               style={{
                 ...webStyles.authorName,
-                color: supportsGradientText ? 'transparent' : fallbackHighlightColor,
-                background: supportsGradientText ? quoteGradient : 'none',
-                WebkitTextFillColor: supportsGradientText ? 'transparent' : 'currentColor',
-                WebkitBackgroundClip: supportsGradientText ? 'text' : 'initial',
-                backgroundClip: supportsGradientText ? 'text' : 'initial',
+                ...highlightStyle,
               }}
             >
               {current.author}

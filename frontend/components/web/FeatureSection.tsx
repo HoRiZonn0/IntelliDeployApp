@@ -44,7 +44,7 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({
           ? ({
               background: isDark
                 ? 'linear-gradient(180deg, rgba(16,20,41,0.98) 0%, rgba(11,14,31,0.92) 100%)'
-                : 'linear-gradient(220deg, rgba(255,221,247,0.15) 9%, #FFF 95%)',
+                : 'linear-gradient(220deg, rgba(238, 242, 255, 0.88) 0%, rgba(245, 243, 255, 0.94) 42%, rgba(255, 255, 255, 0.98) 100%)',
               boxShadow: isDark
                 ? '0px 30px 80px rgba(2, 6, 20, 0.38)'
                 : '0px 16px 40px rgba(155, 165, 210, 0.08)',
