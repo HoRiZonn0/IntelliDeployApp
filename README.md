@@ -124,6 +124,13 @@ const API_BASE_URL = 'http://localhost:9000';
 sqlite:///./intellideploy.db
 ```
 
+如果需要更高并发写入，可切换到 PostgreSQL（推荐生产环境）：
+```text
+postgresql+psycopg://postgres:your_password@127.0.0.1:5432/intellideploy
+```
+
+切换方式：修改 `backend/.env` 里的 `DATABASE_URL`，并重新安装后端依赖。
+
 后端首次启动时会自动创建数据库表。
 
 ## 五、常见问题
