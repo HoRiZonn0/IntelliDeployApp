@@ -105,19 +105,19 @@ const CheckIconBox = () => {
   return (
     <div style={{
       display: 'flex', padding: 2, alignItems: 'center', justifyContent: 'center', borderRadius: 5,
-      border: '0.4px solid rgba(0,0,0,0.06)', background: '#ECECEC',
+      border: '0.4px solid rgba(124,98,255,0.14)', background: 'linear-gradient(180deg, rgba(236,240,255,0.96) 0%, rgba(226,232,255,0.9) 100%)',
       overflow: 'hidden', position: 'relative', flexShrink: 0,
       width: 16, height: 16,
     }}>
       <FeatureIconSVG />
       <div style={{
         display: 'flex', width: 15, height: 15, justifyContent: 'center',
-        alignItems: 'center', borderRadius: 3, background: '#F8F8F8',
-        boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05), 0 -0.4px 0.8px 0 rgba(0,0,0,0.20) inset, 0 0.8px 0.4px 0 #FFF inset',
+        alignItems: 'center', borderRadius: 3, background: 'rgba(255,255,255,0.96)',
+        boxShadow: '0 2px 5px 0 rgba(74,84,152,0.08), 0 -0.4px 0.8px 0 rgba(84,92,148,0.14) inset, 0 0.8px 0.4px 0 #FFF inset',
         position: 'relative', zIndex: 1, flexShrink: 0,
       }}>
         <svg width="7" height="7" viewBox="0 0 15 15" fill="none">
-          <path d="M2.21191 7.96284L5.30856 11.0595L12.3866 3.98145" stroke="#404040" strokeWidth="2.36" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M2.21191 7.96284L5.30856 11.0595L12.3866 3.98145" stroke="#5A50CF" strokeWidth="2.36" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </div>
     </div>
@@ -140,13 +140,14 @@ const LightPlanCard = ({ plan, billingCycle }: { plan: PlanData; billingCycle: '
     return (
       <div style={{
         display: 'flex', flexDirection: 'column', padding: 18, gap: 24,
-        borderRadius: 30, background: 'rgba(243,243,243,0.77)',
+        borderRadius: 30, background: 'linear-gradient(180deg, rgba(233, 239, 255, 0.78) 0%, rgba(244, 241, 255, 0.82) 100%)',
+        border: '1px solid rgba(124, 98, 255, 0.12)',
       }}>
         {/* Inner white card */}
         <div style={{
           display: 'flex', flexDirection: 'column', padding: 12, gap: 16,
-          borderRadius: 24, background: '#FFF',
-          boxShadow: '0 0 1px 0 rgba(207,207,207,0.22), 0 6px 14px 0 rgba(0,0,0,0.02)',
+          borderRadius: 24, background: 'rgba(255,255,255,0.94)',
+          boxShadow: '0 0 1px 0 rgba(175,183,224,0.24), 0 10px 24px 0 rgba(95,110,184,0.06)',
           overflow: 'hidden', position: 'relative',
         }}>
           {/* Gradient glow background */}
@@ -160,17 +161,17 @@ const LightPlanCard = ({ plan, billingCycle }: { plan: PlanData; billingCycle: '
                 <feFlood floodOpacity="0" result="bg"/><feBlend in="SourceGraphic" in2="bg"/><feGaussianBlur stdDeviation="91"/>
               </filter>
               <linearGradient id="lglow_g" x1="489" y1="157" x2="357" y2="471" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#FFE6C8"/>
-                <stop offset="0.5" stopColor="#FFCEF3"/>
-                <stop offset="1" stopColor="#CBD5FF"/>
+                <stop stopColor="#E3EAFF"/>
+                <stop offset="0.5" stopColor="#D7CCFF"/>
+                <stop offset="1" stopColor="#BFD4FF"/>
               </linearGradient>
             </defs>
           </svg>
           {/* Details area */}
           <div style={{
             display: 'flex', flexDirection: 'column', padding: 32, gap: 52,
-            borderRadius: 20, border: '1px solid #F8F8F8', background: '#FBFBFB',
-            boxShadow: '0 -4px 4px 0 rgba(255,255,255,0.25) inset, 0 0 1px 0 rgba(207,207,207,0.22)',
+            borderRadius: 20, border: '1px solid rgba(228, 232, 255, 0.88)', background: 'linear-gradient(180deg, rgba(252, 253, 255, 0.98) 0%, rgba(245, 247, 255, 0.96) 100%)',
+            boxShadow: '0 -4px 4px 0 rgba(255,255,255,0.28) inset, 0 0 1px 0 rgba(175,183,224,0.22)',
             overflow: 'hidden', position: 'relative',
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -187,8 +188,8 @@ const LightPlanCard = ({ plan, billingCycle }: { plan: PlanData; billingCycle: '
             <button style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               padding: '18px 24px', borderRadius: 20, border: 'none', cursor: 'pointer',
-              background: 'linear-gradient(180deg, #6B52EB 0%, #7C62FF 100%)',
-              boxShadow: '0 26px 28px 0 rgba(0,0,0,0.15), 0 6px 12px 0 rgba(0,0,0,0.12), 0 2px 5px 0 rgba(0,0,0,0.10)',
+              background: 'linear-gradient(180deg, #7157F4 0%, #8A73FF 100%)',
+              boxShadow: '0 18px 28px 0 rgba(124,98,255,0.22), 0 6px 12px 0 rgba(61,78,164,0.12), 0 2px 5px 0 rgba(0,0,0,0.08)',
             }}>
               <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 14, color: '#FFF', textTransform: 'capitalize' }}>Choose plan</span>
               <CaretRight color="white" />
@@ -233,18 +234,19 @@ const DarkPlanCard = ({ plan, billingCycle }: { plan: PlanData; billingCycle: 'm
     return (
       <div style={{
         display: 'flex', flexDirection: 'row', padding: 18, gap: 16,
-        borderRadius: 30, background: '#252525', border: '2px solid #F2F2F2',
+        borderRadius: 30, background: 'linear-gradient(180deg, rgba(12, 18, 40, 0.98) 0%, rgba(16, 22, 48, 0.96) 100%)', border: '1px solid rgba(156, 139, 255, 0.18)',
+        boxShadow: '0 24px 60px rgba(3, 8, 24, 0.28)',
         flex: 1,
       }}>
         {/* Left: price card with radial gradient */}
         <div style={{
           display: 'flex', flexDirection: 'column', padding: 12, borderRadius: 30,
-          background: 'radial-gradient(100% 100% at 50% 0%, #7B7B7B 0%, #3D3D3D 68.39%)',
+          background: 'radial-gradient(100% 100% at 50% 0%, rgba(118, 122, 255, 0.58) 0%, rgba(34, 42, 92, 0.92) 68.39%)',
           minWidth: 550,
         }}>
           <div style={{
             display: 'flex', flexDirection: 'column', padding: 32, gap: 80,
-            borderRadius: 20, background: 'linear-gradient(0deg, #40414E, #40414E)',
+            borderRadius: 20, background: 'linear-gradient(180deg, rgba(20, 28, 62, 0.96) 0%, rgba(18, 24, 54, 0.98) 100%)',
             overflow: 'hidden', position: 'relative', flex: 1,
           }}>
             {/* Background glow SVG */}
@@ -254,7 +256,7 @@ const DarkPlanCard = ({ plan, billingCycle }: { plan: PlanData; billingCycle: 'm
                 <ellipse cx="93" cy="177" rx="93" ry="177" transform="matrix(-0.646 0.765 0.413 0.910 150 222)" fill="white"/>
               </g>
               <g filter="url(#dg1)">
-                <ellipse cx="112" cy="227" rx="112" ry="227" transform="matrix(0.303 0.952 0.769 -0.641 291 424)" fill="#C97070"/>
+                <ellipse cx="112" cy="227" rx="112" ry="227" transform="matrix(0.303 0.952 0.769 -0.641 291 424)" fill="#8C76FF"/>
               </g>
               <defs>
                 <filter id="dg0" x="-109" y="101" width="543" height="706" filterUnits="userSpaceOnUse">
@@ -287,9 +289,9 @@ const DarkPlanCard = ({ plan, billingCycle }: { plan: PlanData; billingCycle: 'm
               </svg>
               <button style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                padding: '16px 28px', borderRadius: 16, border: '1px solid rgba(0,0,0,0.05)',
-                background: '#ECECEC', cursor: 'pointer', position: 'relative', zIndex: 1,
-                boxShadow: '0 8px 17px 0 rgba(0,0,0,0.05), 0 -1px 2px 0 rgba(0,0,0,0.20) inset, 0 2px 1px 0 #FFF inset',
+                padding: '16px 28px', borderRadius: 16, border: '1px solid rgba(159,174,255,0.12)',
+                background: 'rgba(244, 246, 255, 0.96)', cursor: 'pointer', position: 'relative', zIndex: 1,
+                boxShadow: '0 8px 17px 0 rgba(20,26,64,0.16), 0 -1px 2px 0 rgba(0,0,0,0.14) inset, 0 2px 1px 0 rgba(255,255,255,0.9) inset',
                 width: '100%',
               }}>
                 <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 14, color: '#404040', textTransform: 'capitalize' }}>Choose Plan</span>
@@ -346,14 +348,14 @@ export default function PricingSection({ theme }: PricingSectionProps) {
         position: 'relative',
       }}>
         {/* Background glow: purple circle top right */}
-        <svg style={{ position: 'absolute', right: -100, top: -80, opacity: 0.2, filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 } as any}
+        <svg style={{ position: 'absolute', right: -100, top: -80, opacity: 0.18, filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 } as any}
           width="560" height="560" viewBox="0 0 560 560" fill="none">
-          <circle cx="280" cy="280" r="280" fill="#C8C8F4"/>
+          <circle cx="280" cy="280" r="280" fill="#C8D5FF"/>
         </svg>
         {/* Background glow: pink ellipse top right */}
-        <svg style={{ position: 'absolute', right: 0, top: -20, opacity: 0.25, filter: 'blur(90px)', pointerEvents: 'none', zIndex: 0 } as any}
+        <svg style={{ position: 'absolute', right: 0, top: -20, opacity: 0.2, filter: 'blur(90px)', pointerEvents: 'none', zIndex: 0 } as any}
           width="420" height="380" viewBox="0 0 420 380" fill="none">
-          <ellipse cx="300" cy="140" rx="200" ry="170" fill="#FFCEF3"/>
+          <ellipse cx="300" cy="140" rx="200" ry="170" fill="#D9CCFF"/>
         </svg>
         {/* Moon / atmosphere decoration top right */}
         {/* Header */}
@@ -362,11 +364,11 @@ export default function PricingSection({ theme }: PricingSectionProps) {
           <div style={{
             display: 'inline-flex', alignSelf: 'flex-start',
             padding: '8px 16px', borderRadius: 100,
-            border: '1px solid #FFF', background: 'rgba(255,255,255,0.40)',
+            border: isDark ? '1px solid rgba(156, 139, 255, 0.26)' : '1px solid rgba(124, 98, 255, 0.18)', background: isDark ? 'rgba(156, 139, 255, 0.12)' : 'rgba(255,255,255,0.56)',
             backdropFilter: 'blur(3px)',
-            boxShadow: '0 2px 4px 0 rgba(183,183,183,0.25)',
+            boxShadow: isDark ? '0 10px 24px rgba(2, 6, 20, 0.2)' : '0 2px 4px 0 rgba(183,183,183,0.18)',
           }}>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 13, color: '#454545' }}>Pricing Plan</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 13, color: isDark ? '#D8D1FF' : '#5A50CF' }}>Pricing Plan</span>
           </div>
           {/* Title */}
           <h2 style={{
@@ -378,26 +380,35 @@ export default function PricingSection({ theme }: PricingSectionProps) {
           {/* Subtitle */}
           <p style={{
             fontFamily: "'Inter', 'PingFang SC', sans-serif", fontWeight: 400, fontSize: 15,
-            color: isDark ? colors.textSecondary : '#5C5C5C',
+            color: isDark ? colors.textSecondary : '#666D80',
             lineHeight: '190%', letterSpacing: -0.15, margin: 0,
           }}>{'我们照顾每一种需求，定制了不同付费体验。用户可以自由选择体验的深度。现在订阅即可享受10%天使折扣！'}</p>
           {/* Toggle */}
           <div style={{
             display: 'inline-flex', alignSelf: 'flex-start',
             padding: 8, borderRadius: 100,
-            border: '3px solid #FFF', background: 'rgba(255,255,255,0.20)',
-            boxShadow: '0 9px 20px 0 rgba(141,141,141,0.25)',
+            border: isDark ? '1px solid rgba(156, 139, 255, 0.18)' : '1px solid rgba(124, 98, 255, 0.16)', background: isDark ? 'rgba(16, 21, 44, 0.7)' : 'rgba(255,255,255,0.5)',
+            boxShadow: isDark ? '0 12px 28px rgba(3, 8, 24, 0.22)' : '0 9px 20px 0 rgba(141,141,141,0.18)',
+            backdropFilter: 'blur(6px)',
           }}>
             {(['monthly', 'yearly'] as const).map((cycle) => (
               <button key={cycle} onClick={() => setBillingCycle(cycle)} style={{
                 padding: '10px 28px', borderRadius: 100, border: 'none', cursor: 'pointer',
-                background: billingCycle === cycle ? '#7C62FF' : 'transparent',
-                boxShadow: billingCycle === cycle ? '0 4px 6px 0 rgba(186,186,186,0.25)' : 'none',
-                outline: billingCycle === cycle ? '3px solid #FFF' : 'none',
+                background: billingCycle === cycle
+                  ? (isDark ? 'linear-gradient(180deg, #8B79FF 0%, #6A74FF 100%)' : '#7C62FF')
+                  : 'transparent',
+                boxShadow: billingCycle === cycle
+                  ? (isDark ? '0 8px 18px rgba(83, 95, 255, 0.26)' : '0 4px 10px rgba(124, 98, 255, 0.18)')
+                  : 'none',
+                outline: billingCycle === cycle
+                  ? (isDark ? '1px solid rgba(216, 222, 255, 0.08)' : '2px solid rgba(255,255,255,0.92)')
+                  : 'none',
               }}>
                 <span style={{
                   fontFamily: "'Geist', 'Inter', sans-serif", fontWeight: 500, fontSize: 15,
-                  color: billingCycle === cycle ? 'rgba(255,255,255,0.8)' : '#667085',
+                  color: billingCycle === cycle
+                    ? 'rgba(255,255,255,0.92)'
+                    : (isDark ? 'rgba(227, 232, 255, 0.7)' : '#667085'),
                 }}>{cycle === 'monthly' ? 'Monthly' : 'Yearly'}</span>
               </button>
             ))}
