@@ -14,8 +14,16 @@ class FallbackConfig:
     root_dir: Path = ROOT_DIR
     prompts_dir: Path = ROOT_DIR / "prompts"
     templates_dir: Path = ROOT_DIR / "templates"
-    workspaces_dir: Path = ROOT_DIR / "workspaces"
-    artifacts_dir: Path = ROOT_DIR / "artifacts"
+    workspaces_dir: Path = field(
+        default_factory=lambda: Path(
+            os.getenv("FALLBACK_WORKSPACES_DIR", str(ROOT_DIR / "workspaces"))
+        )
+    )
+    artifacts_dir: Path = field(
+        default_factory=lambda: Path(
+            os.getenv("FALLBACK_ARTIFACTS_DIR", str(ROOT_DIR / "artifacts"))
+        )
+    )
     max_repair_retries: int = int(os.getenv("FALLBACK_MAX_REPAIR_RETRIES", "3"))
     llm_timeout_seconds: int = int(os.getenv("FALLBACK_LLM_TIMEOUT_SECONDS", "30"))
     state_ttl_seconds: int = int(os.getenv("FALLBACK_STATE_TTL_SECONDS", "86400"))
